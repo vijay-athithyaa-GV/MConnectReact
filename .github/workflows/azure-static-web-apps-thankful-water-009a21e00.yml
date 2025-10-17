@@ -23,7 +23,7 @@ jobs:
       - name: Set up Node.js (Frontend)
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '22.x'
           cache: 'npm'
           cache-dependency-path: 'MConnect/frontend/package-lock.json'
       
@@ -38,7 +38,7 @@ jobs:
       - name: Set up Node.js (Backend)
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '22.x'
           cache: 'npm'
           cache-dependency-path: 'MConnect/backend/package-lock.json'
       
@@ -70,3 +70,4 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_WATER_009A21E00 }}
           action: "close"
+
