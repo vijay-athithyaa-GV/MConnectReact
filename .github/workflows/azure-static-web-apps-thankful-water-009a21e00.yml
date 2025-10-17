@@ -19,6 +19,7 @@ jobs:
         with:
           submodules: true
           lfs: false
+          fetch-depth: 0
       
       # Set up Node.js
       - name: Set up Node.js
@@ -26,23 +27,24 @@ jobs:
         with:
           node-version: '18.x'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
       
-      # Install frontend dependencies
-      - name: Install frontend dependencies
+      # Frontend setup
+      - name: Setup frontend
         working-directory: ./MConnect/frontend
         run: |
-          npm install
-          npm install -g react-scripts
+          npm ci
       
       # Build frontend
       - name: Build frontend
         working-directory: ./MConnect/frontend
         run: npm run build
 
-      # Install backend dependencies
-      - name: Install backend dependencies
+      # Backend setup
+      - name: Setup backend
         working-directory: ./MConnect/backend
-        run: npm install
+        run: |
+          npm ci
 
       # Deploy to Azure Static Web Apps
       - name: Build And Deploy
@@ -52,7 +54,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "MConnect/frontend"
-          app_build_command: "npm install && npm run build"
+          app_build_command: "npm ci && npm run build"
           output_location: "build"
           api_location: "MConnect/backend"
           skip_app_build: true
