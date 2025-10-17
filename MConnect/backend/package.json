@@ -4,9 +4,9 @@
   "description": "Backend for MConnect - College Second-hand Marketplace",
   "main": "server.js",
   "scripts": {
-  "build": "node server.js",
   "start": "node server.js",
-  "server": "nodemon server.js"
+  "server": "nodemon server.js",
+  "build": "node server.js"
 },
   "dependencies": {
     "cors": "^2.8.5",
