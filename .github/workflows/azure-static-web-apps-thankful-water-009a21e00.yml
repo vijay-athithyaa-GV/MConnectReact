@@ -19,13 +19,12 @@ jobs:
         with:
           fetch-depth: 0
       
-      # Set up Node.js for frontend
-      - name: Set up Node.js (Frontend)
+      # Set up Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: '18.x'
           cache: 'npm'
-          cache-dependency-path: 'MConnect/frontend/package-lock.json'
       
       # Install and build frontend
       - name: Install and build frontend
@@ -34,14 +33,6 @@ jobs:
           npm ci
           npm run build
 
-      # Set up Node.js for backend
-      - name: Set up Node.js (Backend)
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22.x'
-          cache: 'npm'
-          cache-dependency-path: 'MConnect/backend/package-lock.json'
-      
       # Install backend dependencies
       - name: Install backend dependencies
         working-directory: MConnect/backend
@@ -55,10 +46,10 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "MConnect/frontend/build"
-          app_build_command: "cd MConnect/frontend && npm ci && npm run build"
           output_location: ""  # Empty because we're pointing directly to the build folder
           api_location: "MConnect/backend"
           skip_app_build: true
+          api_build_command: "npm ci"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -70,4 +61,3 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_WATER_009A21E00 }}
           action: "close"
-
